@@ -10,43 +10,74 @@ const databaseId = process.env.DATABASE_ID;
 
 const listDatabase = async () => {
   const response = await notion.databases.retrieve({ database_id: databaseId });
-  console.log(response);
 };
 
 // listDatabase();
 
-async function getVideoGames(property, filterValue) {
+async function getVideoGames(property, filterValue, startCursor) {
   let payload = {};
   if (property === "") {
-    payload = {
-      database_id: databaseId,
-      sorts: [
-        {
-          property: "Title",
-          direction: "ascending",
-        },
-      ],
-    };
+    if (startCursor === "") {
+      
+      payload = {
+        database_id: databaseId,
+        sorts: [
+          {
+            property: "Title",
+            direction: "ascending",
+          },
+        ],
+      };
+    } else {
+      
+      payload = {
+        database_id: databaseId,
+        start_cursor: startCursor,
+        sorts: [
+          {
+            property: "Title",
+            direction: "ascending",
+          },
+        ],
+      };
+    }
   } else {
-    payload = {
-      database_id: databaseId,
-      sorts: [
-        {
-          property: "Title",
-          direction: "ascending",
+    if (startCursor == null) {
+      payload = {
+        database_id: databaseId,
+        sorts: [
+          {
+            property: "Title",
+            direction: "ascending",
+          },
+        ],
+        filter: {
+          property: property,
+          select: {
+            equals: filterValue,
+          },
         },
-      ],
-      filter: {
-        property: property,
-        select: {
-          equals: filterValue,
+      };
+    } else {
+      payload = {
+        database_id: databaseId,
+        sorts: [
+          {
+            property: "Title",
+            direction: "ascending",
+          },
+        ],
+        filter: {
+          property: property,
+          select: {
+            equals: filterValue,
+          },
         },
-      },
-    };
+      };
+    }
   }
 
-  const { results } = await notion.databases.query(payload);
-
+  const { results, next_cursor } = await notion.databases.query(payload);
   const games = results.map((page) => {
     // console.log(page.properties);
     return {
@@ -67,7 +98,7 @@ async function getVideoGames(property, filterValue) {
     };
   });
 
-  return games;
+  return { games: games, next_cursor: next_cursor };
 }
 
 // async function getCompletedGames() {
@@ -114,5 +145,5 @@ async function getVideoGames(property, filterValue) {
 // }
 
 module.exports = {
-  getVideoGames: getVideoGames
+  getVideoGames: getVideoGames,
 };

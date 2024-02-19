@@ -10,7 +10,10 @@ app.use(express.static("public/gaming-library-front-end/build"));
 app.listen(PORT, console.log(`Server started on port ${PORT}`));
 
 app.get("/games", async (req, res) => {
-  const games = await getVideoGames(req.query.property, req.query.filterValue);
-  console.log(res);
-  res.json(games);
+  const data = await getVideoGames(
+    req.query.property,
+    req.query.filterValue,
+    req.query.startCursor
+  );
+  res.json({games:data.games, next_cursor:data.next_cursor});
 });

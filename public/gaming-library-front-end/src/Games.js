@@ -4,50 +4,62 @@ import "./Games.scss";
 const Games = (props) => {
   const [games, setGames] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [cursor, setCursor] = useState("");
+  const [data, setData] = useState("");
 
   const title = props.title;
   const property = props.property;
   const filterValue = props.filterValue;
 
-  const getGamesData = async () => {
-    
-    const res = await fetch(`http://localhost:5000/games?property=${property}&filterValue=${filterValue}`);
+  async function getGamesData() {
+    const res = await fetch(
+      `http://localhost:5000/games?property=${property}&filterValue=${filterValue}&startCursor=${cursor}`
+    );
     const data = await res.json();
     setLoading(false);
-    return data;
+    setCursor(data.next_cursor);
+    setData(data.games);
   };
 
-  useEffect(() => {
-    (async () => {
-      let games = await getGamesData();
+  async function loadNext() {
+    const res = await fetch(
+      `http://localhost:5000/games?property=${property}&filterValue=${filterValue}&startCursor=${cursor}`
+    );
+    const data = await res.json();
+    setLoading(false);
+    setCursor(data.next_cursor);
+    setData(data.games);
+  }
 
-      let listGames = games.map((game) => (
-        <article key={game.id} style={{ maxWidth: "620px" }}>
-          <header
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              paddingBottom: "0",
-            }}
-          >
-            <h4 style={{ marginTop: "10px" }}>{game.title}</h4>
-            <h5 style={{ marginTop: "10px" }}>{game.userScore} / 100</h5>
-          </header>
-          {game.completionStatus}
-          <br />
-          {game.hoursPlayed}
-          <footer>
-            <details>
-              <summary>Review</summary>
-              <p>{game.notes}</p>
-            </details>
-          </footer>
-        </article>
-      ));
-      setGames(listGames);
-    })()
-  });
+  (async () => {
+    await getGamesData();
+
+    let listGames = data.map((game) => (
+      <article key={game.id} style={{ maxWidth: "620px" }}>
+        <header
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            paddingBottom: "0",
+          }}
+        >
+          <h4 style={{ marginTop: "10px" }}>{game.title}</h4>
+          <h5 style={{ marginTop: "10px" }}>{game.userScore} / 100</h5>
+        </header>
+        {game.completionStatus}
+        <br />
+        {game.hoursPlayed}
+        <footer>
+          <details>
+            <summary>Review</summary>
+            <p>{game.notes}</p>
+          </details>
+        </footer>
+      </article>
+    ));
+    setGames(listGames);
+  })(null);
 
   return (
     <div style={{ paddingBottom: "10px" }}>
@@ -70,6 +82,10 @@ const Games = (props) => {
       >
         {games}
       </div>
+      <br />
+      <button onClick={loadNext()}>
+        load next
+      </button>
     </div>
   );
 };
