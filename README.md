@@ -1,4 +1,4 @@
-# Project Title
+# Gaming Library
 
 
 
@@ -6,11 +6,9 @@
 
 - [Overview](#overview)
   - [Screenshot](#screenshot)
-  - [Links](#links)
 - [My process](#my-process)
   - [Built with](#built-with)
   - [What I learned](#what-i-learned)
-  - [Continued development](#continued-development)
 - [Author](#author)
 
 ## Overview
@@ -22,7 +20,6 @@
 ### Links
 
 - Solution URL: [Solution URL]()
-- Live Site URL: [Live Site]()
 
 ### Vision Statement
 
@@ -31,7 +28,11 @@
 
 ### Built with
 
-- 
+- React
+- Used React App template
+- Pico CSS
+- Notion API
+- Notion Javascript SDK
 
 ### What I learned
 
