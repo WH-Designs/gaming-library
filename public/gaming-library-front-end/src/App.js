@@ -24,7 +24,7 @@ function App() {
           <article>
             <Games
               title="Completed Games"
-              filterValue="Completed"
+              filterValue="100%"
               property="CompletionStatus"
             />
           </article>
