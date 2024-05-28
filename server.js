@@ -1,11 +1,12 @@
 const express = require("express");
 const cors = require("cors");
-const { getVideoGames, getCompletedGames } = require("./services/notion");
+const { getVideoGames, createGame } = require("./services/notion");
 const PORT = process.env.PORT || 5000;
 
 const app = express();
 
 app.use(cors());
+app.use(express.json());
 app.use(express.static("public/gaming-library-front-end/build"));
 
 app.get("/games", async (req, res) => {
@@ -21,6 +22,23 @@ app.get("/games", async (req, res) => {
     res.status(500).json({ message: 'An error occurred' });
   }
 });
+
+app.post("/creategame", async (req, res) => {
+  try {
+    //console.log(req);
+    
+    const response = await createGame(
+      req.body.title,
+      req.body.date,
+      req.body.favorite
+    );
+    //console.log(response);
+    res.status(200);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: 'An error occurred' });
+  }
+})
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
 

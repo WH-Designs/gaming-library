@@ -1,4 +1,5 @@
 import logo from "./logo.svg";
+import { Link } from "react-router-dom";
 
 const Nav = () => {
   return (
@@ -25,10 +26,10 @@ const Nav = () => {
       </ul>
       <ul>
         <li>
-          <a href="#">Home</a>
+          <Link to="/">Home</Link>
         </li>
         <li>
-          <a href="#">New Game</a>
+          <Link to="newgame">New Game</Link>
         </li>
       </ul>
     </nav>

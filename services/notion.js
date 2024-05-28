@@ -101,6 +101,37 @@ async function getVideoGames(property, filterValue, startCursor) {
   return { games: games, next_cursor: next_cursor };
 }
 
+async function createGame(title, date, favorite) {
+  const response = await notion.pages.create({
+    parent: {
+      type: "database_id",
+      database_id: databaseId,
+    },
+    properties: {
+      Title: {
+        title: [
+          {
+            text: {
+              content: title,
+            },
+          },
+        ],
+      },
+      ReleaseDate: {
+        date: {
+          start: date,
+        },
+      },
+      Favorite: {
+        select: {
+          name: favorite,
+        },
+      },
+    },
+  });
+  return response;
+}
+
 // async function getCompletedGames() {
 //   const payload = {
 //     database_id: databaseId,
@@ -146,4 +177,5 @@ async function getVideoGames(property, filterValue, startCursor) {
 
 module.exports = {
   getVideoGames: getVideoGames,
+  createGame: createGame
 };
