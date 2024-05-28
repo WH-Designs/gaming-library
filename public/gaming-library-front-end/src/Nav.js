@@ -31,6 +31,9 @@ const Nav = () => {
         <li>
           <Link to="newgame">New Game</Link>
         </li>
+        <li>
+          <Link to="search">Search</Link>
+        </li>
       </ul>
     </nav>
   );

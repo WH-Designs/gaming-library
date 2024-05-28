@@ -12,7 +12,7 @@ const Games = (props) => {
 
   async function getGamesData() {
     const res = await fetch(
-      `http://localhost:5000/games?property=${property}&filterValue=${filterValue}&startCursor=${cursor}`
+      `http://localhost:5000/games?property=${property}&filterValue=${filterValue}&startCursor=${cursor}&search=${false}`
     );
     const data = await res.json();
     setLoading(false);
@@ -47,7 +47,7 @@ const Games = (props) => {
 
   async function loadNext() {
     const res = await fetch(
-      `http://localhost:5000/games?property=${property}&filterValue=${filterValue}&startCursor=${cursor}`
+      `http://localhost:5000/games?property=${property}&filterValue=${filterValue}&startCursor=${cursor}&search="false"`
     );
     const data = await res.json();
     setLoading(false);

@@ -14,7 +14,8 @@ app.get("/games", async (req, res) => {
     const data = await getVideoGames(
       req.query.property,
       req.query.filterValue,
-      req.query.startCursor
+      req.query.startCursor,
+      req.query.search
     );
     res.json({games:data.games, next_cursor:data.next_cursor});
   } catch (err) {

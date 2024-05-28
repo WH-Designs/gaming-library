@@ -36,7 +36,12 @@ const NewGame = () => {
   }
 
   return (
-    <div>
+    <div
+      style={{
+        paddingLeft: "150px",
+        paddingRight: "150px",
+      }}
+    >
       <form onSubmit={handleSubmit}>
         <fieldset>
           <label>

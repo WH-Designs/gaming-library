@@ -12,68 +12,82 @@ const listDatabase = async () => {
   const response = await notion.databases.retrieve({ database_id: databaseId });
 };
 
-// listDatabase();
-
-async function getVideoGames(property, filterValue, startCursor) {
+async function getVideoGames(property, filterValue, startCursor, search) {
   let payload = {};
-  if (property === "") {
-    if (startCursor === "") {
-      
-      payload = {
-        database_id: databaseId,
-        sorts: [
-          {
-            property: "Title",
-            direction: "ascending",
-          },
-        ],
-      };
-    } else {
-      
-      payload = {
-        database_id: databaseId,
-        start_cursor: startCursor,
-        sorts: [
-          {
-            property: "Title",
-            direction: "ascending",
-          },
-        ],
-      };
-    }
+  if (search === "true") {
+    payload = {
+      database_id: databaseId,
+      sorts: [
+        {
+          property: "Title",
+          direction: "ascending",
+        },
+      ],
+      filter: {
+        property: property,
+        title: {
+          contains: filterValue,
+        },
+      },
+    };
   } else {
-    if (startCursor == null) {
-      payload = {
-        database_id: databaseId,
-        sorts: [
-          {
-            property: "Title",
-            direction: "ascending",
-          },
-        ],
-        filter: {
-          property: property,
-          select: {
-            equals: filterValue,
-          },
-        },
-      };
+    if (property === "") {
+      if (startCursor === "") {
+        payload = {
+          database_id: databaseId,
+          sorts: [
+            {
+              property: "Title",
+              direction: "ascending",
+            },
+          ],
+        };
+      } else {
+        payload = {
+          database_id: databaseId,
+          start_cursor: startCursor,
+          sorts: [
+            {
+              property: "Title",
+              direction: "ascending",
+            },
+          ],
+        };
+      }
     } else {
-      payload = {
-        database_id: databaseId,
-        sorts: [
-          {
-            property: "Title",
-            direction: "ascending",
+      if (startCursor == null) {
+        payload = {
+          database_id: databaseId,
+          sorts: [
+            {
+              property: "Title",
+              direction: "ascending",
+            },
+          ],
+          filter: {
+            property: property,
+            select: {
+              equals: filterValue,
+            },
           },
-        ],
-        filter: {
-          property: property,
-          select: {
-            equals: filterValue,
+        };
+      } else {
+        payload = {
+          database_id: databaseId,
+          sorts: [
+            {
+              property: "Title",
+              direction: "ascending",
+            },
+          ],
+          filter: {
+            property: property,
+            select: {
+              equals: filterValue,
+            },
           },
-        },
-      };
+        };
+      }
     }
   }
 
@@ -131,49 +145,6 @@ async function createGame(title, date, favorite) {
   });
   return response;
 }
-
-// async function getCompletedGames() {
-//   const payload = {
-//     database_id: databaseId,
-//     sorts: [
-//       {
-//         property: "Title",
-//         direction: "ascending",
-//       },
-//     ],
-//     filter: {
-//       property: "CompletionStatus",
-//       select: {
-//         equals: "Completed" || "Beaten",
-//       },
-//     },
-//   };
-
-//   const { results } = await notion.databases.query(payload);
-
-//   const games = results.map((page) => {
-//     // console.log(page.properties);
-//     console.log(page.properties.CompletionStatus);
-//     return {
-//       id: page.id,
-//       title: page.properties.Title.title[0].plain_text,
-//       completionStatus: page.properties.CompletionStatus.select.name,
-//       hoursPlayed: page.properties.HoursPlayed.formula.string,
-//       userScore:
-//         page.properties.UserScore.number === null
-//           ? 0
-//           : page.properties.UserScore.number,
-//       favorite: page.properties.Favorite.select.name,
-//       notes:
-//         page.properties.Notes.rich_text.length === 0
-//           ? ""
-//           : page.properties.Notes.rich_text[0].text.content,
-//       releaseDate: page.properties.ReleaseDate.date,
-//     };
-//   });
-
-//   return games;
-// }
 
 module.exports = {
   getVideoGames: getVideoGames,
