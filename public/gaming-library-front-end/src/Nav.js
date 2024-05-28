@@ -1,4 +1,5 @@
 import logo from "./logo.svg";
+import search from "./search.svg";
 import { Link } from "react-router-dom";
 
 const Nav = () => {
@@ -32,7 +33,16 @@ const Nav = () => {
           <Link to="newgame">New Game</Link>
         </li>
         <li>
-          <Link to="search">Search</Link>
+          <Link to="search">
+            <img
+              src={search}
+              alt="search"
+              style={{
+                width: "30px",
+                height: "30px",
+              }}
+            />
+          </Link>
         </li>
       </ul>
     </nav>

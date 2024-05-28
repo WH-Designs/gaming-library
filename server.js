@@ -31,7 +31,8 @@ app.post("/creategame", async (req, res) => {
     const response = await createGame(
       req.body.title,
       req.body.date,
-      req.body.favorite
+      req.body.favorite,
+      req.body.source
     );
     //console.log(response);
     res.status(200);

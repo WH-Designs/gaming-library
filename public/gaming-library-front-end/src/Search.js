@@ -70,8 +70,8 @@ const Search = () => {
           style={{
             maxHeight: "500px",
             overflowY: "auto",
-              marginTop: "-30px",
-              marginRight: "-100px"
+            marginTop: "-30px",
+            maxWidth: "830px",
           }}
           id="gamesContainer"
         >

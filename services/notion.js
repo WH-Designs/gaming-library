@@ -115,7 +115,7 @@ async function getVideoGames(property, filterValue, startCursor, search) {
   return { games: games, next_cursor: next_cursor };
 }
 
-async function createGame(title, date, favorite) {
+async function createGame(title, date, favorite, source) {
   const response = await notion.pages.create({
     parent: {
       type: "database_id",
@@ -140,6 +140,28 @@ async function createGame(title, date, favorite) {
         select: {
           name: favorite,
         },
+      },
+      Sources: {
+        multi_select: [
+          {
+          name: source,
+        },
+      ],
+      },
+      CompletionStatus: {
+        select: {
+          name: "Not Played",
+        },
+      },
+      Platforms: {
+        multi_select: [
+          {
+          name: "PC (Windows)",
+        },
+      ],
+      },
+      TimePlayed: {
+        number: 0
       },
     },
   });

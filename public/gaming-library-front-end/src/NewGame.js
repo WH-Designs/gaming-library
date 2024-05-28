@@ -1,38 +1,42 @@
+import { useNavigate } from "react-router-dom";
+
 const NewGame = () => {
+  const navigate = useNavigate();
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const payload = Object.fromEntries(formData);
-    console.log(payload);
-    if (payload.favorite == 'on') {
-      payload.favorite = 'TRUE';
+    if (payload.favorite == "on") {
+      payload.favorite = "TRUE";
     } else {
-      payload.favorite = 'FALSE';
+      payload.favorite = "FALSE";
     }
-    createGame(payload);
-  };
+    const data = createGame(payload);
+    navigate("/");
+  }
 
   async function createGame(payload) {
-      const requestOptions = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title: payload.title,
-          date: payload.releaseDate,
-          favorite: payload.favorite,
-        }),
-      };
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        title: payload.title,
+        date: payload.releaseDate,
+        favorite: payload.favorite,
+        source: payload.source,
+      }),
+    };
 
-      try {
-        const res = await fetch(
-          "http://localhost:5000/creategame",
-          requestOptions
-        );
-        const data = await res.json();
-        console.log(data);
-      } catch (error) {
-        console.error("Error:", error);
-      }
+    try {
+      const res = await fetch(
+        "http://localhost:5000/creategame",
+        requestOptions
+      );
+      const data = await res.json();
+      return data;
+    } catch (error) {
+      console.error("Error:", error);
+    }
   }
 
   return (
@@ -70,6 +74,17 @@ const NewGame = () => {
             />
             Favorite
           </label>
+          <select name="source">
+            <option selected value="Steam">
+              Steam
+            </option>
+            <option value="Amazon">Amazon</option>
+            <option value="Epic">Epic</option>
+            <option value="Xbox">Xbox</option>
+            <option value="Battle.net">Battle.net</option>
+            <option value="EA">EA</option>
+            <option value="Ubisoft">Ubisoft</option>
+          </select>
         </fieldset>
         <input type="submit" value="Submit" />
       </form>
