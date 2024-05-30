@@ -4,25 +4,30 @@
 
 ## Table of contents
 
-- [Overview](#overview)
-  - [Screenshot](#screenshot)
-- [My process](#my-process)
-  - [Built with](#built-with)
-  - [What I learned](#what-i-learned)
-- [Author](#author)
+- [Gaming Library](#gaming-library)
+  - [Table of contents](#table-of-contents)
+  - [Overview](#overview)
+    - [Screenshot](#screenshot)
+    - [Vision Statement](#vision-statement)
+  - [My process](#my-process)
+    - [Built with](#built-with)
+    - [What I learned](#what-i-learned)
+    - [Continued development](#continued-development)
+  - [Author](#author)
+  - [Design Principles](#design-principles)
 
 ## Overview
+For this project, I aimed to deepen my understanding of React by developing a practical and functional application tailored to my daily needs. Consequently, I created a gaming library site leveraging React alongside a straightforward Express server. This server interacts with my Notion database via the Notion API to load and modify data. Throughout this process, I gained significant insights into React's intricacies and best practices. Notably, I iterated on this project twice before arriving at the current version, each iteration refining my skills and improving the site's functionality. I am committed to ongoing development to enhance its utility further.
 
 ### Screenshot
 
-![Final Solution]()
-
-### Links
-
-- Solution URL: [Solution URL]()
+![Final Solution](/documents/designs/1.png)
+![Final Solution](/documents/designs/2.png)
+![Final Solution](/documents/designs/3.png)
+![Final Solution](/documents/designs/4.png)
 
 ### Vision Statement
-
+My vision is to create the ultimate gaming library platform where users can effortlessly manage their video game collections, access detailed reviews, and swiftly search through their libraries. We aim to provide a seamless and intuitive experience that enhances the way gamers interact with their collections, enabling them to easily track their progress, revisit past reviews, and discover new favorites. Our goal is to build a comprehensive, user-centric tool that evolves with the needs of the gaming community, fostering a more organized and enjoyable gaming experience.
 
 ## My process
 
@@ -33,13 +38,14 @@
 - Pico CSS
 - Notion API
 - Notion Javascript SDK
+- Express JS
 
 ### What I learned
-
+From this project I learned all of the basics to React and learned how to make a simple express server. Also I learned about how the Notion API works and how to interact with the API using purely javascript and react only to fetch data and manipulate it. 
 
 
 ### Continued development
-
+For this project I plan to add many more features since I am going to be using this project daily to handle my video game data from notion with the easy to use UI I made for it
 
 
 ## Author
